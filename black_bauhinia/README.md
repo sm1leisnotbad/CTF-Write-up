@@ -22,11 +22,25 @@ Và seed là time(0).
 ![image](https://github.com/sm1leisnotbad/CTF-Write-up/assets/90888568/2d7bd27a-4002-432e-b424-450f2118280a)
 
 Ta chỉ cần code lại phần này là được
-
+```py
+libc = ctypes.CDLL("/lib/x86_64-linux-gnu/libc.so.6")
+libc.srand.argtypes = [ctypes.c_uint]
+libc.rand.restype = ctypes.c_int
+libc.srand(int(time.time()))
+def guess(libc):
+    dice1 = libc.rand() % 6 + 1
+    dice2 = libc.rand() % 6 + 1
+    dice3 = libc.rand() % 6 + 1
+    print(dice1,dice2,dice3)
+    points = dice1+dice2+dice3
+    if points >= 10:
+        return 2
+    return 1
+```
 
 ##Bypass buffer overflow
 
-Phần này, chall yêu cầu ta phải đoán số random từ /dev/urandom. Việc này gần như là không thể.
+Sau khi pass được phần đầu, task tiếp theo là đoán số random từ /dev/urandom. Việc này gần như là không thể.
 ![image](https://github.com/sm1leisnotbad/CTF-Write-up/assets/90888568/045c0c3e-bd71-48f0-a3f9-15b5c06966b8)
 
 Khi để ý code phần code ở dưới, hàm này sử dụng scanf("%s",v1) và so sánh v1 với số random. 
