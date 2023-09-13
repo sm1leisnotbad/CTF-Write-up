@@ -19,6 +19,7 @@ dice3 = rand() % 6 + 1;
 points = dice1 + dice2 + dice3;
 ```
 Và seed là time(0).
+
 ![image](https://github.com/sm1leisnotbad/CTF-Write-up/assets/90888568/2d7bd27a-4002-432e-b424-450f2118280a)
 
 Ta chỉ cần code lại phần này là được
